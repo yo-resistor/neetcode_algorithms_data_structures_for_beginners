@@ -1,0 +1,125 @@
+class ListNode:
+    def __init__(self, val = None, next_node = None):
+        self.val = val
+        self.next = next_node
+
+class LinkedList:
+    def __init__(self):
+        self.head = ListNode()
+        
+    def get(self, index: int) -> int:
+        # If nothing is in list, cannot get anything
+        if self.getValues()[0] == None:
+            return -1
+        else:
+            n = len(self.getValues())
+        
+        # If index is out of bound of list
+        if index > n - 1:
+            return -1
+        
+        return self.getValues()[index]
+    
+    def insertHead(self, val: int) -> None:
+        new = ListNode(val)
+        
+        # If head is empty, replace head with new node
+        if self.head.val == None:
+            self.head = new
+        
+        # If head is not empty, insert new node before head
+        else:
+            new.next = self.head
+            self.head = new
+    
+    def insertTail(self, val: int) -> None:
+        new = ListNode(val)
+        
+        # If head and tail is empty, replace them with new node
+        if self.head.val == None:
+            self.head = new
+            
+        # If head is not empty, there must be tail
+        # Find tail and insert new node after tail
+        else:
+            curr = self.head
+            while(curr.next):
+                curr = curr.next
+                
+            curr.next = new
+    
+    def getTail(self) -> int:
+        if self.head == None:
+            return None
+        
+        curr = self.head
+        while(curr.next):
+            curr = curr.next
+            
+        return curr.val
+            
+    def remove(self, index: int) -> bool:
+        # If there's nothing in the list, cannot remove.
+        if self.head == None:
+            return False
+        
+        count = 1
+        curr = self.head
+        while(curr.next):
+            count += 1
+            curr = curr.next
+            
+        # If index is out of bound of list
+        if index > count - 1:
+            return False
+        
+        # Corner cases: front node
+        if index == 0:
+            self.head = self.head.next
+            return True
+        
+        # Normal cases: node in between front and end
+        else:
+            curr = self.head
+            for i in range(index + 1):
+                if i == index - 1:
+                    prev = curr
+                elif i == index:
+                    prev.next = curr.next
+                curr = curr.next
+                
+            return True
+    
+    def getValues(self) -> list[int]:
+        values = []
+        curr = self.head
+        while curr:
+            values.append(curr.val)
+            curr = curr.next
+        return values
+                
+        
+sll = LinkedList()
+print(sll.getValues())
+# print(sll.getValues())
+# print(sll.get(0))
+# print(sll.head.val, sll.tail.val)
+# sll.insertHead(3)
+# print(sll.getValues())
+# sll.insertHead(2)
+# print(sll.getValues())
+# sll.insertTail(-1)
+# print(sll.getValues())
+# sll.insertTail(4)
+# print(sll.getValues())
+# print(sll.get(2))
+
+# sll.remove(3)
+# print(sll.getValues())
+# sll.remove(2)
+# print(sll.getValues())
+# sll.remove(1)
+# print(sll.getValues())
+# sll.remove(0)
+# print(sll.getValues())
+# print(sll.remove(1))

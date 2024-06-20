@@ -1,0 +1,49 @@
+class ListNode:
+    def __init__(self, val = 0, next = None):
+        self.val = val
+        self.next = next
+    
+def main():
+    head = ListNode(1)
+    head.next = ListNode(2)
+    head.next.next = ListNode(3)
+    print(getValues(head))
+    reverse = reverseList_recursive(head)
+    print(getValues(reverse))
+    
+def reverseList_iterative(head: ListNode) -> ListNode: 
+    prev = None
+    next = head
+    
+    while next:
+        trav = next.next
+        next.next = prev
+        prev = next
+        next = trav
+    
+    return prev
+
+def reverseList_recursive(head: ListNode) -> ListNode:
+    # base case: when head is at tail
+    if head == None:
+        return None
+    
+    reverse = head
+    # recursive case:
+    if head.next:
+        reverse = reverseList_recursive(head.next)
+        head.next.next = head
+    head.next = None
+        
+    return reverse
+    
+
+def getValues(head: ListNode) -> list[int]:
+    values = []
+    curr = head
+    while curr:
+        values.append(curr.val)
+        curr = curr.next
+    return values
+
+main()
