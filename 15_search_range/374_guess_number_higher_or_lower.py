@@ -14,3 +14,11 @@ class Solution:
                 high = mid - 1
             else:
                 return mid
+
+pick = 5
+
+def guess(num):
+    if num > pick:
+        print(10)
+        
+guess(6)
