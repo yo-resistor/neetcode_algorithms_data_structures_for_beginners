@@ -7,20 +7,25 @@ class TreeNode:
         self.right = right
         
 class Solution:
-    def bfs(root: TreeNode):
+    def levelOrder(self, root: TreeNode) -> list[list[int]]:
         queue = deque()
+        results = []
         
         if root:
             queue.append(root)
-            
-        level = 0
+        
+        # level = 0
         while len(queue) > 0:
-            print("level:", level)
-            for i in range(len(queue)):
+            result = []
+            for _ in range(len(queue)):
                 curr = queue.popleft()
-                print(curr.val)
+                result.append(curr.val)
                 if curr.left:
-                    queue.apeend(curr.left)
+                    queue.append(curr.left)
                 if curr.right:
                     queue.append(curr.right)
-            level += 1
+            # level += 1
+            results.append(result)
+                
+        return results
+    
