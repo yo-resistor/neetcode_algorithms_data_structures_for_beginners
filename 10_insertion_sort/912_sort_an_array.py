@@ -10,7 +10,6 @@ class Solution:
             
         return nums
         
-
 def main():
     nums = [5, 2, 3, 1]
     

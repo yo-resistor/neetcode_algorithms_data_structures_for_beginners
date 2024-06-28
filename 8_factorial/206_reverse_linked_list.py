@@ -5,13 +5,13 @@ class ListNode:
 
 class Solution:
     def reverseList(self, head: ListNode) -> ListNode:
-        # base case
+        # corner case if no linked list
         if not head:
             return None
         
         reversed = head
         
-        # recursive case
+        # base and recursive case
         if head.next:
             reversed = self.reverseList(head.next)
             head.next.next = head

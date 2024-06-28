@@ -19,6 +19,7 @@ class Solution:
         
         for i in range(start, end):
             if arr[i].key <= pivot.key:
+            # this can be arr[i].key < pivot.key:
                 temp = arr[left]
                 arr[left] = arr[i]
                 arr[i] = temp
