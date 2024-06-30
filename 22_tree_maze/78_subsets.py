@@ -6,22 +6,23 @@ class Solution:
         
         results = []
         subset = []
+        index = 0
         
-        def dfs(i):
+        def dfs(index):
             # base case:
-            if i >= len(nums):
+            if index >= len(nums):
                 results.append(subset.copy())
                 return
             
             # append the element
             subset.append(nums[i])
-            dfs(i + 1)
+            dfs(index + 1)
             
             # Do not append the element
             subset.pop()
-            dfs(i + 1)
+            dfs(index + 1)
             
-        dfs(0)
+        dfs(index)
             
         return results
     
