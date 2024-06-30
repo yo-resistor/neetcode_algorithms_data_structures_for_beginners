@@ -15,7 +15,7 @@ class Solution:
                 return
             
             # append the element
-            subset.append(nums[i])
+            subset.append(nums[index])
             dfs(index + 1)
             
             # Do not append the element
