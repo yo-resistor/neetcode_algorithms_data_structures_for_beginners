@@ -3,48 +3,89 @@ class KthLargest:
         # construct heap with given nums
         self.minHeap = nums
         self.k = k
+        self.heapify(self.minHeap)
         
         # if len(nums) is greater than k, pop the min until we get len(nums) == k
+        while len(self.minHeap) > (self.k + 1):
+            self.pop()
+    
+    def heapify(self, array: list[int]) -> None:
+        # if the array is empty make it [0]
+        if len(array) < 1:
+            array.append(0)
+        # if the array is not empty, make some changes ex [3, 4, 5] -> [0, 4, 5, 3]
+        else:
+            print("the array is not empty -----")
+            array.append(array[0])
+            array[0] = 0
         
+        curr = (len(array) - 1) // 2
+        
+        while curr > 0:
+            index = curr
+            self.percolate_down(index=index)
+            curr -= 1
+        return
+    
+    def pop(self) -> None:
+        if len(self.minHeap) == 1:
+            return
+        if len(self.minHeap) == 2:
+            return
+        self.minHeap[1] = self.minHeap.pop()
+        self.percolate_down(index=1)
+        return
         
     def add(self, val: int) -> int:
-        # if new val is smaller than or equal to the min (root val), return root val
-        if val < self.minHeap[1]:
-            return self.minHeap[1]
-        
-        # else insert new val in the heap
         self.minHeap.append(val)
-        i_push = len(self.minHeap) - 1
+        index = len(self.minHeap) - 1
+        self.percolate_up(index=index)
+        if len(self.minHeap) - 1 > self.k:
+            self.pop()
         
-        # percolate up
-        while self.minHeap[i_push] < self.minHeap[i_push // 2]:
-            self.minHeap[i_push], self.minHeap[i_push // 2] = self.minHeap[i_push // 2], self.minHeap[i_push]
-            i_push = i_push // 2
-        
-        # pop the min just once since k = len(nums) - 1
-        self.minHeap[1] = self.minHeap.pop()
-        i_pop = 1
-        
-        # percolate down
-        while (2 * i_pop) < len(self.minHeap):
-        # if left child exists
-            if (
-                (2 * i_pop) + 1 < len(self.minHeap) and 
-                self.minHeap[2 * i_pop + 1] < self.minHeap[2 * i_pop] and
-                self.minHeap[2 * i_pop + 1] < self.minHeap[i_pop]
-            ):
-            # if right child exists
-            # and right child is smaller than left child
-            # and right child is smaller than parent -> swap
-                self.minHeap[i_pop], self.minHeap[2 * i_pop + 1] = self.minHeap[2 * i_pop + 1], self.minHeap[i_pop]
-                i_pop = 2 * i_pop + 1
-            elif self.minHeap[2 * i_pop] < self.minHeap[i]:
-            # if left child is smalelr than parent -> swap
-                self.minHeap[i_pop], self.minHeap[2 * i_pop] = self.minHeap[2 * i_pop], self.minHeap[i_pop]
-                i_pop = 2 * i_pop
-            else:
-            # if parent is the smallest
-                break
-        
-        # return the root val
         return self.minHeap[1]
+    
+    def percolate_down(self, index: int) -> None:
+        while 2 * index < len(self.minHeap):
+            if (
+                2 * index + 1 < len(self.minHeap) and
+                self.minHeap[2 * index + 1] < self.minHeap[2 * index] and
+                self.minHeap[2 * index + 1] < self.minHeap[index]
+            ):
+                temp = self.minHeap[index]
+                self.minHeap[index] = self.minHeap[2 * index + 1]
+                self.minHeap[2 * index + 1] = temp
+                index = 2 * index + 1
+            elif (self.minHeap[2 * index] < self.minHeap[index]):
+                temp = self.minHeap[index]
+                self.minHeap[index] = self.minHeap[2 * index]
+                self.minHeap[2 * index] = temp
+                index = 2 * index
+            else:
+                break
+        return
+        
+        
+    def percolate_up(self, index: int) -> None:
+        while (
+            index > 1 and
+            self.minHeap[index // 2] > self.minHeap[index]
+        ):
+            temp = self.minHeap[index]
+            self.minHeap[index] = self.minHeap[index // 2]
+            self.minHeap[index // 2] = temp
+            index = index // 2
+        return
+    
+def main():
+    obj = KthLargest(k=2, nums=[0])
+    print(obj.minHeap)
+    print("----done with initialization----")
+    print(obj.add(-1), obj.minHeap)
+    print(obj.add(1), obj.minHeap)
+    print(obj.add(-2), obj.minHeap)
+    print(obj.add(-4), obj.minHeap)
+    print(obj.add(3), obj.minHeap)
+    
+if __name__ == "__main__":
+    main()
