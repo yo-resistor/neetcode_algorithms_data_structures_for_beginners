@@ -24,10 +24,14 @@ class MinHeap:
         return self.minHeap[1]
     
     def heapify(self, nums: list[int]) -> None:
+        # if nums is empty make it [0]
         if len(nums) < 1:
-            return
-        
-        nums.append(nums[0])
+            nums.append(0)
+        # if nums is not empty, make some changes ex [3, 4, 5] -> [0, 4, 5, 3]
+        else:
+            nums.append(nums[0])
+            nums[0] = 0
+
         self.minHeap = nums
         
         curr = (len(self.minHeap) - 1) // 2
