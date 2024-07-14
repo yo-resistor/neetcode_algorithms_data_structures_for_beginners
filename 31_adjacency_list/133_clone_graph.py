@@ -15,7 +15,7 @@ class Solution:
             new = Node(node.val)
             oldToNew[node] = new
             for neighbor in node.neighbors:
-                new.neighbors.append(neighbor)
+                new.neighbors.append(dfs(neighbor))
                 
             return new
         return dfs(node) if node else None
